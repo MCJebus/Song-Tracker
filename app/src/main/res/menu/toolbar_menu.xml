@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id ="@+id/solved_songs"
+        android:title="@string/solved_songs_text"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/switch_mode"
+        android:title="@string/switch_game_mode_text"
+        app:showAsAction="never"
+        />
+</menu>

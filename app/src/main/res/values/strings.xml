@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SongTracker</string>
+    <string name="solved_songs_text">Solved Songs</string>
+    <string name="switch_game_mode_text">Switch Game Mode</string>
+    <string name="guess_title">Guess</string>
+    <string name="map_title">Map</string>
+    <string name="lyric_title">Lyrics</string>
+</resources>

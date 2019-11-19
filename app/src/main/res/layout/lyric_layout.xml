@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/my_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:scrollbars="vertical">
+    <TextView
+        android:id="@+id/firstLine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Hello."
+        android:gravity="center_vertical|center_horizontal"/>
+
+</com.google.android.material.card.MaterialCardView>

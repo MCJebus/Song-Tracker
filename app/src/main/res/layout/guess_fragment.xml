@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/song_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Song"
+        app:hintEnabled="true"
+        android:layout_centerInParent="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/artist_text_input"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Artist"
+        app:hintEnabled="true"
+        android:layout_below="@+id/song_text"
+        android:layout_alignLeft="@id/song_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_submit"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Submit"
+        android:enabled="false"
+        android:layout_below="@id/button_hint"
+        android:layout_alignEnd="@id/artist_text_input">
+
+    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_hint"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Hint"
+        android:enabled="false"
+        android:layout_below="@id/artist_text_input"
+        android:layout_alignEnd="@id/artist_text_input">
+
+    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_skip"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Skip"
+        android:enabled="false"
+        android:layout_below="@id/button_hint"
+        android:layout_alignStart="@id/artist_text_input">
+
+    </com.google.android.material.button.MaterialButton>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="If you need a hint, you'll find it here."
+        android:layout_below="@id/button_submit"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="50dp">
+    </androidx.appcompat.widget.AppCompatTextView>
+</RelativeLayout>
