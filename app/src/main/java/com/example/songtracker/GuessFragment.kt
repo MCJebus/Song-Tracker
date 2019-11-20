@@ -10,8 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.songtracker.MainActivity.Companion.sharedPrefFile
-import com.example.songtracker.MainActivity.Companion.Song
-import com.example.songtracker.MainActivity.Companion.Artist
+import com.example.songtracker.MainActivity.Companion.Number
+import com.example.songtracker.MainActivity.Companion.songs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -50,16 +50,16 @@ class GuessFragment : Fragment(), View.OnClickListener {
     fun checkAnswers(v: View) {
         val song = view!!.song_text_input.text.toString()
         val artist = view!!.artist_text.text.toString()
+        val answer: String = artist + "(" + song + ").txt"
         mPreferences = getActivity()!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-        if (mPreferences.contains(Song) && mPreferences.contains(Artist)) {
-            var prefsong = mPreferences.getString(Song, "default")
-            var prefartist = mPreferences.getString(Artist, "default")
-            if (prefsong == song && prefartist == artist) {
-                val snackbar = Snackbar.make(v, "Correct", Snackbar.LENGTH_LONG)
-                snackbar.show()
+        if (mPreferences.contains(Number)) {
+            var prefanswer = songs[mPreferences.getInt(Number, 0)]
+            if (prefanswer == answer) {
                 changeCurrentSong()
+                val snackbar = Snackbar.make(v, "Correct " + mPreferences.getInt(Number, 1).toString(), Snackbar.LENGTH_LONG)
+                snackbar.show()
             } else {
-                val snackbar = Snackbar.make(v, "Incorrect", Snackbar.LENGTH_LONG)
+                val snackbar = Snackbar.make(v, "Incorrect " + songs[mPreferences.getInt(Number, 0)], Snackbar.LENGTH_LONG)
                 snackbar.show()
             }
         } else {
@@ -69,10 +69,9 @@ class GuessFragment : Fragment(), View.OnClickListener {
     }
     fun changeCurrentSong() {
         mPreferences = getActivity()!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-
+        var prefnumber = mPreferences.getInt(Number, 0) + 1
         val editor = mPreferences.edit()
-        editor.putString(Song, "life_on_mars")
-        editor.putString(Artist, "david_bowie")
+        editor.putInt(Number, prefnumber)
         editor.commit()
     }
 }

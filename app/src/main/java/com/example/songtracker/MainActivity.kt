@@ -30,8 +30,12 @@ class MainActivity : AppCompatActivity() {
         mPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 
         val editor = mPreferences.edit()
-        editor.putString(Song, "like_a_rolling_stone")
-        editor.putString(Artist, "bob_dylan")
+        //Check to see if app has been used before. Only puts string if re-installed.
+        if (mPreferences.contains(Number)) {
+
+        } else {
+            editor.putInt(Number, 0)
+        }
         editor.commit()
 
         preLoadSongData()
@@ -110,7 +114,13 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val sharedPrefFile = "mypref"
-        const val Song = "songKey"
-        const val Artist = "artistKey"
+        const val Number = "numberKey"
+        val songs: Array<String> = arrayOf("bob_dylan(like_a_rolling_stone).txt", "david_bowie(life_on_mars).txt",
+            "elton_john(your_song).txt", "guns_n_roses(sweet_child_o_mine).txt","john_lennon(imagine).txt",
+            "judy_garland(over_the_rainbow).txt", "led_zeppelin(stairway_to_heaven).txt", "michael_jackson(billie_jean).txt",
+            "nirvana(smells_like_teen_spirit).txt", "oasis(live_forever).txt", "queen(bohemian_rhapsody).txt,",
+            "rolling_stones(I_can't_get_no_satisfaction).txt", "sex_pistols(god_save_the_queen).txt", "the_beatles(hey_jude).txt",
+            "the_clash(london_calling).txt", "the_eagles(hotel_california).txt", "the_kinks(waterloo_sunset).txt",
+            "u2(one).txt", "whitney_houston(i_will_always_love_you).txt")
     }
 }
