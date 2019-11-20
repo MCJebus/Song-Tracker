@@ -1,19 +1,24 @@
 package com.example.songtracker
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import java.io.OutputStreamWriter
 
 class MainActivity : AppCompatActivity() {
     lateinit var db: DatabaseHelper
+    lateinit var mPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +26,14 @@ class MainActivity : AppCompatActivity() {
 
         //Setup database
         db = DatabaseHelper(this)
+        //Get shared preferences.
+        mPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+
+        val editor = mPreferences.edit()
+        editor.putString(Song, "like_a_rolling_stone")
+        editor.putString(Artist, "bob_dylan")
+        editor.commit()
+
         preLoadSongData()
 
         //Setup Tab Layout and Action Bar
@@ -83,11 +96,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun preLoadSongData() {
-        val temp: Lyric = Lyric(10, "Shes a maniac", "Heaven", "Buzz Lightyear", true)
-        val temp2: Lyric = Lyric(10, "Maniac", "Heaven", "Buzz Lightyear", true)
-        val temp3: Lyric = Lyric(10, "On the floor", "Heaven", "Buzz Lightyear", false)
-        db.addLyric(temp)
-        db.addLyric(temp2)
-        db.addLyric(temp3)
+        try {
+            val fileout = openFileOutput("lyrics.txt", Context.MODE_PRIVATE)
+            val outputWriter = OutputStreamWriter(fileout)
+            outputWriter.write("Shes a maniac")
+            outputWriter.append("\n")
+            outputWriter.write("on the floor")
+            outputWriter.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    companion object {
+        const val sharedPrefFile = "mypref"
+        const val Song = "songKey"
+        const val Artist = "artistKey"
     }
 }
