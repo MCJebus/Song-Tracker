@@ -2,7 +2,6 @@ package com.example.songtracker
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import com.example.songtracker.MainActivity.Companion.ClassicLyricNumber
+import com.example.songtracker.MainActivity.Companion.ClassicSongNumber
+import com.example.songtracker.MainActivity.Companion.CurrentLyricNumber
+import com.example.songtracker.MainActivity.Companion.CurrentSongNumber
+import com.example.songtracker.MainActivity.Companion.GameMode
+import com.example.songtracker.MainActivity.Companion.classicSongs
+import com.example.songtracker.MainActivity.Companion.currentSongs
+import java.io.*
 
 class LyricFragment() : Fragment() {
+
+    lateinit var mPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +31,14 @@ class LyricFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val lyricModelArrayList: ArrayList<String?> = populateList()
-
+        var lyricModelArrayList: ArrayList<String?>
+        mPreferences = getActivity()!!.getSharedPreferences(MainActivity.sharedPrefFile, Context.MODE_PRIVATE)
+        if (mPreferences.getString(GameMode, "Classic").equals("Classic"))
+        {
+            lyricModelArrayList = getClassicLyricsList()
+        } else {
+            lyricModelArrayList = getCurrentLyricsList()
+        }
         //2. set layoutManager
         val recyclerView = view.findViewById<View>(R.id.my_recycler_view) as RecyclerView
         val layoutManager = LinearLayoutManager(getActivity())
@@ -39,9 +49,7 @@ class LyricFragment() : Fragment() {
         recyclerView.adapter = mAdapter
     }
 
-    fun readFileAsLinesUsingBufferedReader(fileName: String): List<String>
-            = activity!!.applicationContext.assets.open(fileName).bufferedReader().readLines()
-
+    //Function for testing purposes.
     private fun populateList(): ArrayList<String?> {
         val list2 = ArrayList<String?>()
         try {
@@ -53,11 +61,71 @@ class LyricFragment() : Fragment() {
             while ({ text = bufferedReader.readLine(); text }() != null) {
                 list2.add(text)
             }
+            inputStreamReader.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+        }
+
+        return list2
+    }
+
+    fun getClassicLyricsList(): ArrayList<String?> {
+        mPreferences = getActivity()!!.getSharedPreferences(MainActivity.sharedPrefFile, Context.MODE_PRIVATE)
+        val list = ArrayList<String?>()
+        var actualList = ArrayList<String?>()
+        try {
+            var fileInputStream: InputStream? = null
+            var filepath: String = classicSongs[mPreferences.getInt(ClassicSongNumber, 1)]
+            fileInputStream = getActivity()!!.getAssets().open(filepath)
+            var inputStreamReader = InputStreamReader(fileInputStream)
+            val bufferedReader = BufferedReader(inputStreamReader)
+            var text: String? = null
+            var count: Int = 0
+            var lyricNumber = mPreferences.getInt(ClassicLyricNumber, 0)
+            while (({ text = bufferedReader.readLine(); text }() != null)) {
+                    list.add(text)
+            }
+            while (count < mPreferences.getInt(ClassicLyricNumber, 0)) {
+                actualList.add(list[count])
+                count+=1
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return list2
+
+        return actualList
+
+    }
+
+    fun getCurrentLyricsList(): ArrayList<String?> {
+        mPreferences = getActivity()!!.getSharedPreferences(MainActivity.sharedPrefFile, Context.MODE_PRIVATE)
+        val list = ArrayList<String?>()
+        var actualList = ArrayList<String?>()
+        try {
+            var fileInputStream: InputStream? = null
+            var filepath: String = currentSongs[mPreferences.getInt(CurrentSongNumber, 1)]
+            fileInputStream = getActivity()!!.getAssets().open(filepath)
+            var inputStreamReader = InputStreamReader(fileInputStream)
+            val bufferedReader = BufferedReader(inputStreamReader)
+            var text: String? = null
+            var count: Int = 0
+            var lyricNumber = mPreferences.getInt(CurrentLyricNumber, 0)
+            while (({ text = bufferedReader.readLine(); text }() != null)) {
+                list.add(text)
+            }
+            while (count < mPreferences.getInt(CurrentLyricNumber, 0)) {
+                actualList.add(list[count])
+                count+=1
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+        return actualList
+
     }
 
     companion object {
