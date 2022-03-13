@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Song"
+        android:hint="@string/song_hint"
         app:hintEnabled="true"
         android:layout_centerInParent="true">
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Artist"
+        android:hint="@string/artist_hint"
         app:hintEnabled="true"
         android:layout_below="@+id/song_text"
         android:layout_alignLeft="@id/song_text">
@@ -42,7 +42,7 @@
         android:id="@+id/button_submit"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Submit"
+        android:text="@string/submit_label"
         android:enabled="true"
         android:layout_below="@id/button_hint"
         android:layout_alignEnd="@id/artist_text_input">
@@ -52,8 +52,8 @@
         android:id="@+id/button_hint"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Hint"
-        android:enabled="false"
+        android:text="@string/hint_label"
+        android:enabled="true"
         android:layout_below="@id/artist_text_input"
         android:layout_alignEnd="@id/artist_text_input">
 
@@ -62,8 +62,8 @@
         android:id="@+id/button_skip"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Skip"
-        android:enabled="false"
+        android:text="@string/skip_label"
+        android:enabled="true"
         android:layout_below="@id/button_hint"
         android:layout_alignStart="@id/artist_text_input">
 
@@ -72,7 +72,7 @@
         android:id="@+id/text_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="If you need a hint, you'll find it here."
+        android:text="@string/hint_text"
         android:layout_below="@id/button_submit"
         android:layout_centerHorizontal="true"
         android:paddingTop="50dp">

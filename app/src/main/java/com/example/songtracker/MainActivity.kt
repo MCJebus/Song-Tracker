@@ -1,6 +1,7 @@
 package com.example.songtracker
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -38,8 +39,9 @@ class MainActivity : AppCompatActivity() {
             editor.putInt(CurrentLyricNumber, 5)
         }
         editor.commit()
+
         //This function is used to preload 3 found lyrics for testing purposes.
-        preLoadSongData()
+        //preLoadSongData()
 
         //Setup Tab Layout and Action Bar
         setSupportActionBar(findViewById(R.id.toolbar))
@@ -92,7 +94,8 @@ class MainActivity : AppCompatActivity() {
 
     //What happens if this menu option is selected.
     fun solvedSongs() {
-
+        var intent = Intent(this.applicationContext,SongsActivity::class.java)
+        startActivity(intent)
     }
 
     //What happens if this menu option is selected.
@@ -108,6 +111,7 @@ class MainActivity : AppCompatActivity() {
         editor.commit()
     }
 
+    //Used only for testing.
     fun preLoadSongData() {
         try {
             val fileout = openFileOutput("lyrics.txt", Context.MODE_PRIVATE)
@@ -122,14 +126,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+
         const val sharedPrefFile = "mypref"
+        //These numbers are used with the below arrays to determine what song the user is on.
         const val ClassicSongNumber = "classicSongNumberKey"
         const val ClassicLyricNumber = "classicLyricNumberKey"
         const val CurrentSongNumber = "currentSongNumberKey"
         const val CurrentLyricNumber = "currentLyricNumberKey"
+        //This holds a string of the game mode either "Classic" or "Current"
         const val GameMode = "modeKey"
 
-        val classicSongs: Array<String> = arrayOf("bob_dylan(like_a_rolling_stone).txt", "david_bowie(life_on_mars).txt",
+        //Holds all classic song filenames for reading lyrics.
+        val classicSongs: Array<String> = arrayOf("bob_dylan(like_a_rolling_stone).txt", "david_bowie(life_on_mars_).txt",
             "elton_john(your_song).txt", "guns_n_roses(sweet_child_o_mine).txt","john_lennon(imagine).txt",
             "judy_garland(over_the_rainbow).txt", "led_zeppelin(stairway_to_heaven).txt", "michael_jackson(billie_jean).txt",
             "nirvana(smells_like_teen_spirit).txt", "oasis(live_forever).txt", "queen(bohemian_rhapsody).txt,",
@@ -137,6 +145,7 @@ class MainActivity : AppCompatActivity() {
             "the_clash(london_calling).txt", "the_eagles(hotel_california).txt", "the_kinks(waterloo_sunset).txt",
             "u2(one).txt", "whitney_houston(i_will_always_love_you).txt")
 
+        //Holds all current song filenames for reading lyrics.
         val currentSongs: Array<String> = arrayOf("a_j_tracey(ladbroke_grove).txt", "aitch(taste_make_it_shake).txt",
             "ariana_grande_:_miley_cyrus_:_lana_del_rey(don't_call_me_angle).txt", "dave(professor_x).txt",
             "dermot_kennedy(outnumbered).txt", "dominic_fike(3_nights).txt", "ed_sheeran_ft_stormzy(take_me_back_to_london).txt",
@@ -144,5 +153,14 @@ class MainActivity : AppCompatActivity() {
             "lil_tecca(ransom).txt", "post_malone(circles).txt", "post_malone_ft_young_thug(goodbyes).txt", "regard(ride_it).txt",
             "sam_feldt_ft_rani(post_malone).txt", "sam_smith(how_do_you_sleep).txt", "shawn_mendes_:_camila_cabello(senorita).txt",
             "tones_&_i(dance_monkey).txt", "young_t_&_bugsey_ft_aitch(strike_a_pose).txt")
+
+        //Holds all classic song hints for help.
+        val classicHints: Array<String> = arrayOf("1965 it by american singer.", "This song came from another planet.",
+            "Classic hit by British icon", "Band also write 'Paradise City'", "You'll have to ... what it would be like",
+            "Somewheeeeeere", "One way to get to paradise", "Created by the 'King Of Pop'", "Bands lead killed himself",
+            "Band made up of 2 brothers", "Controversial frontman recently had a film made about his life",
+            "Band has been mentioned before in this app", "British Sexual Weaponry Band", "Possibly the biggest band of all time",
+            "You hear the british capital shouting for you.", "Hotel in the golden state.", "Night time in waterloo",
+            "The one", "Annnnnnnnd  IIIIIIIEEIII")
     }
 }

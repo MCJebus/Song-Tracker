@@ -6,4 +6,10 @@
     <string name="map_title">Map</string>
     <string name="lyric_title">Lyrics</string>
     <string name="title_activity_maps">Map</string>
+    <string name="song_hint">Song</string>
+    <string name="artist_hint">Artist</string>
+    <string name="submit_label">Submit</string>
+    <string name="hint_label">Hint</string>
+    <string name="skip_label">Skip</string>
+    <string name="hint_text">If you need a hint, you\'ll find it here.</string>
 </resources>

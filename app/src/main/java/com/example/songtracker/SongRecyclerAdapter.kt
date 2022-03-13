@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 
-class LyricRecyclerAdapter(private val lyricModelArrayList: MutableList<String?>) : RecyclerView.Adapter<LyricRecyclerAdapter.ViewHolder>() {
+class SongRecyclerAdapter (private val songArrayList: MutableList<String?>) : RecyclerView.Adapter<SongRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(var layout: View) : RecyclerView.ViewHolder(layout) {
         var txtMsg: TextView
@@ -25,17 +25,16 @@ class LyricRecyclerAdapter(private val lyricModelArrayList: MutableList<String?>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val info = lyricModelArrayList[position]
+        val info = songArrayList[position]
 
         holder.txtMsg.setText(info)
-        holder.txtMsg.setOnClickListener {v ->
+        holder.txtMsg.setOnClickListener { v ->
             val snackbar = Snackbar.make(v, "You clicked on ${info}", Snackbar.LENGTH_LONG)
             snackbar.show()
         }
     }
 
-
     override fun getItemCount(): Int {
-        return lyricModelArrayList.size
+        return songArrayList.size
     }
 }

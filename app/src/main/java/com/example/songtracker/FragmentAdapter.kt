@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class FragmentAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
+    //Retrieves an instance of the fragment whenever the tab is selected.
     override fun getItem(position: Int): Fragment {
         val fragment : Fragment
         when (position) {
@@ -18,7 +19,7 @@ class FragmentAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         return fragment
     }
 
-
+    //Used when creating tab layout to display labels.
     override fun getPageTitle(position: Int): CharSequence = when (position) {
         0 -> "Guess"
         1 -> "Map"

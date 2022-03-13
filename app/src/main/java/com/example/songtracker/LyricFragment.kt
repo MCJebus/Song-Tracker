@@ -82,7 +82,6 @@ class LyricFragment() : Fragment() {
             val bufferedReader = BufferedReader(inputStreamReader)
             var text: String? = null
             var count: Int = 0
-            var lyricNumber = mPreferences.getInt(ClassicLyricNumber, 0)
             while (({ text = bufferedReader.readLine(); text }() != null)) {
                     list.add(text)
             }
@@ -111,7 +110,6 @@ class LyricFragment() : Fragment() {
             val bufferedReader = BufferedReader(inputStreamReader)
             var text: String? = null
             var count: Int = 0
-            var lyricNumber = mPreferences.getInt(CurrentLyricNumber, 0)
             while (({ text = bufferedReader.readLine(); text }() != null)) {
                 list.add(text)
             }

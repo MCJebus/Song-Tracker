@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.example.songtracker.MainActivity.Companion.GameMode
 import com.example.songtracker.MainActivity.Companion.ClassicLyricNumber
@@ -14,6 +16,7 @@ import com.example.songtracker.MainActivity.Companion.sharedPrefFile
 import com.example.songtracker.MainActivity.Companion.ClassicSongNumber
 import com.example.songtracker.MainActivity.Companion.CurrentLyricNumber
 import com.example.songtracker.MainActivity.Companion.CurrentSongNumber
+import com.example.songtracker.MainActivity.Companion.classicHints
 import com.example.songtracker.MainActivity.Companion.classicSongs
 import com.example.songtracker.MainActivity.Companion.currentSongs
 import com.google.android.material.snackbar.Snackbar
@@ -27,8 +30,13 @@ class GuessFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val vi = inflater!!.inflate(R.layout.guess_fragment, container, false)
+        //Setup on click listeners for buttons.
         val submit = vi.findViewById(R.id.button_submit) as Button
+        val hint = vi.findViewById(R.id.button_hint) as Button
+        val skip = vi.findViewById(R.id.button_skip) as Button
         submit.setOnClickListener(this)
+        hint.setOnClickListener(this)
+        skip.setOnClickListener(this)
 
         return vi
     }
@@ -37,18 +45,40 @@ class GuessFragment : Fragment(), View.OnClickListener {
         fun newInstance(): GuessFragment = GuessFragment()
     }
 
-    fun onSubmitButtonClick(view: View) {
-
-    }
     override fun onClick(v: View) {
         when (v.id) {
             R.id.button_submit -> {
+                //Checks answers based on game modes.
                 mPreferences = getActivity()!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
                 if (mPreferences.getString(GameMode, "Classic").equals("Classic")) {
                     checkClassicAnswers(v)
                 } else {
                     checkCurrentAnswers(v)
                 }
+            }
+            R.id.button_hint -> {
+                //Displays hints.
+                mPreferences = getActivity()!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+                val song = mPreferences.getInt(ClassicSongNumber, 0)
+                val hintText = getActivity()!!.findViewById(R.id.text_hint) as AppCompatTextView
+                hintText.setText(classicHints[song])
+            }
+            R.id.button_skip -> {
+                //Ski song based on game mode.
+                mPreferences = getActivity()!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+                val editor = mPreferences.edit()
+                if (mPreferences.getString(GameMode, "Classic").equals("Classic")) {
+                    val number = mPreferences.getInt(ClassicSongNumber, 0) + 1
+                    editor.putInt(ClassicSongNumber, number)
+                    editor.putInt(ClassicLyricNumber, 0)
+                } else {
+                    val number = mPreferences.getInt(CurrentSongNumber, 0) + 1
+                    editor.putInt(CurrentSongNumber, number)
+                    editor.putInt(CurrentLyricNumber, 0)
+                }
+                editor.commit()
+                val snackbar = Snackbar.make(v, "You skipped a song.", Snackbar.LENGTH_LONG)
+                snackbar.show()
             }
             else -> {
 
